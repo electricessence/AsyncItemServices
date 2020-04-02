@@ -3,21 +3,24 @@ using System.Threading.Tasks;
 
 namespace AsyncItemServices
 {
-	public interface IAsyncResultContainer<T>
+	public interface IAsyncResultContainer<T> : ITaskAwaitable<T>, IAsyncReadOnlyItem<T>
 	{
 		/// <summary>
 		/// The resultant task created by the factory.
 		/// </summary>
 		Task<T> Task { get; }
 
-		/// <summary>
-		/// Asynchronous infrastructure support. This method permits instances of <see cref="IAsyncResultContainer&lt;T&gt;"/> to be await'ed.
-		/// </summary>
-		public TaskAwaiter<T> GetAwaiter() => Task.GetAwaiter();
+		/// <inheritdoc />
+		ValueTask<T> IAsyncReadOnlyItem<T>.Get()
+			=> new ValueTask<T>(Task);
 
-		/// <summary>
-		/// Asynchronous infrastructure support. This method permits instances of <see cref="IAsyncResultContainer&lt;T&gt;"/> to be await'ed.
-		/// </summary>
-		public ConfiguredTaskAwaitable<T> ConfigureAwait(bool continueOnCapturedContext) => Task.ConfigureAwait(continueOnCapturedContext);
+		/// <inheritdoc />
+		ConfiguredTaskAwaitable<T> ITaskAwaitable<T>.ConfigureAwait(bool continueOnCapturedContext)
+			=> Task.ConfigureAwait(continueOnCapturedContext);
+
+		/// <inheritdoc />
+		TaskAwaiter<T> ITaskAwaitable<T>.GetAwaiter()
+			=> Task.GetAwaiter();
 	}
 }
+

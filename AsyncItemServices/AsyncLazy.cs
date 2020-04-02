@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace AsyncItemServices
 {
 	/**
-	 * Based upon Stephen Cleary's Nito.AsyncEx.Coordination.AsyncLazy and  Microsoft.VisualStudio.Threading.AsyncLazy.
+	 * Based upon Stephen Cleary's Nito.AsyncEx.Coordination.AsyncLazy and Microsoft.VisualStudio.Threading.AsyncLazy.
 	 */
 
 	/// <summary>
